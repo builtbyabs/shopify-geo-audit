@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /checkout/
+
+User-agent: Googlebot
+Allow: /
