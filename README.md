@@ -104,7 +104,7 @@ Checks are pure functions `(store) => result`, one per file, so each is triviall
 ## Development
 
 ```bash
-git clone https://github.com/Abs-Automation/shopify-geo-audit.git
+git clone https://github.com/builtbyabs/shopify-geo-audit.git
 cd shopify-geo-audit
 npm install
 npm run build

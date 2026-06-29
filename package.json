@@ -38,13 +38,13 @@
   ],
   "author": "Abhishek Chauhan <automationbyabs@gmail.com> (https://ablyon.tech)",
   "license": "MIT",
-  "homepage": "https://github.com/Abs-Automation/shopify-geo-audit#readme",
+  "homepage": "https://github.com/builtbyabs/shopify-geo-audit#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Abs-Automation/shopify-geo-audit.git"
+    "url": "git+https://github.com/builtbyabs/shopify-geo-audit.git"
   },
   "bugs": {
-    "url": "https://github.com/Abs-Automation/shopify-geo-audit/issues"
+    "url": "https://github.com/builtbyabs/shopify-geo-audit/issues"
   },
   "publishConfig": {
     "access": "public"

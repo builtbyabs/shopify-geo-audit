@@ -95,7 +95,7 @@ export function generateHtmlReport(results: AuditResults): string {
     operatingSystem: 'macOS, Linux, Windows',
     description: 'Zero-config CLI that audits any Shopify storefront for AI-search readiness and generates paste-ready fixes.',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    url: 'https://github.com/Abs-Automation/shopify-geo-audit',
+    url: 'https://github.com/builtbyabs/shopify-geo-audit',
   }, null, 2);
 
   return `<!DOCTYPE html>
@@ -174,8 +174,8 @@ ${REPORT_CSS}
 
   <footer>
     <span class="footer-brand">shopify-geo-audit</span>
-    <a class="footer-link" href="https://github.com/Abs-Automation/shopify-geo-audit" target="_blank" rel="noopener">
-      github.com/Abs-Automation/shopify-geo-audit
+    <a class="footer-link" href="https://github.com/builtbyabs/shopify-geo-audit" target="_blank" rel="noopener">
+      github.com/builtbyabs/shopify-geo-audit
     </a>
   </footer>
 

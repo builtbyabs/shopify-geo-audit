@@ -2,7 +2,7 @@ import dns from 'node:dns/promises';
 import net from 'node:net';
 
 const USER_AGENT =
-  'shopify-geo-audit/0.1.0 (+https://github.com/Abs-Automation/shopify-geo-audit)';
+  'shopify-geo-audit/0.1.0 (+https://github.com/builtbyabs/shopify-geo-audit)';
 const TIMEOUT_MS = 10_000;
 const MAX_REDIRECTS = 5;
 
