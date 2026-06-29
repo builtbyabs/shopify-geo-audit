@@ -1,0 +1,32 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# generated audit output
+geo-audit-output/
+
+# env / secrets
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# test coverage
+coverage/
+
+# npm pack output
+*.tgz
+
+# internal planning notes (not for the public repo)
+BUILD-SPEC.md
