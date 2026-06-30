@@ -11,6 +11,8 @@ npx shopify-geo-audit https://your-store.com
 
 No account, no API key, no config. It fetches the storefront, runs a set of checks for the signals that ChatGPT, Perplexity, Gemini and Google's AI Overviews read, scores the store 0-100, and writes paste-ready fixes to `./geo-audit-output/`.
 
+Want it on your PATH instead of `npx`? `npm i -g shopify-geo-audit`.
+
 ## Why I built this
 
 I do a lot of Shopify work, and "are we showing up in AI answers?" became a real client question fast. The existing tools mostly hand you a dashboard that says you're invisible and stop there. The useful part, the part that takes an afternoon by hand, is producing the actual structured data and config. So I wrote the thing that does that part.
