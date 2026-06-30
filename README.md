@@ -9,6 +9,8 @@ Audit any Shopify store for AI-search readiness, then generate the fixes you act
 npx shopify-geo-audit https://your-store.com
 ```
 
+![shopify-geo-audit's HTML report for Allbirds — an SRO score of 82/100, every check graded high/medium/low, and the paste-ready fixes it generated](docs/report.png)
+
 No account, no API key, no config. It fetches the storefront, runs a set of checks for the signals that ChatGPT, Perplexity, Gemini and Google's AI Overviews read, scores the store 0-100, and writes paste-ready fixes to `./geo-audit-output/`.
 
 Want it on your PATH instead of `npx`? `npm i -g shopify-geo-audit`.
