@@ -1,5 +1,8 @@
 # shopify-geo-audit
 
+[![npm](https://img.shields.io/npm/v/shopify-geo-audit.svg)](https://www.npmjs.com/package/shopify-geo-audit)
+[![license](https://img.shields.io/npm/l/shopify-geo-audit.svg)](LICENSE)
+
 Audit any Shopify store for AI-search readiness, then generate the fixes you actually paste in.
 
 ```bash
