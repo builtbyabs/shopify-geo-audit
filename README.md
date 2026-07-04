@@ -10,7 +10,7 @@ Audit any Shopify store for AI-search readiness, then generate the fixes you act
 npx shopify-geo-audit https://your-store.com
 ```
 
-![shopify-geo-audit's HTML report for Allbirds — an SRO score of 82/100, every check graded high/medium/low, and the paste-ready fixes it generated](docs/report.png)
+![Terminal demo — auditing a live Shopify store, getting an SRO score with every check graded, and the paste-ready fixes written to disk](docs/demo.gif)
 
 No account, no API key, no config. It fetches the storefront, runs a set of checks for the signals that ChatGPT, Perplexity, Gemini and Google's AI Overviews read, scores the store 0-100, and writes paste-ready fixes to `./geo-audit-output/`.
 
@@ -49,7 +49,9 @@ The output isn't a report you read and forget. It's files:
 - `robots-fixes.txt` — the exact lines to stop blocking AI crawlers
 - `priority-list.txt` — every failing check, ranked, each with a one-line fix
 
-Pass `--html` and you also get a self-contained `report.html` you can screenshot or send a client.
+Pass `--html` and you also get a self-contained `report.html` you can screenshot or send a client:
+
+![shopify-geo-audit's HTML report for Allbirds — an SRO score of 82/100, every check graded high/medium/low, and the paste-ready fixes it generated](docs/report.png)
 
 ## Example
 
