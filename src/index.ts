@@ -31,6 +31,20 @@ interface CliOptions {
   out: string;
   html: boolean;
   json: boolean;
+  minScore?: string;
+}
+
+function parseMinScore(value: string | undefined): number | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  const minScore = Number(value);
+  if (!Number.isInteger(minScore) || minScore < 0 || minScore > 100) {
+    throw new Error('--min-score must be an integer between 0 and 100');
+  }
+
+  return minScore;
 }
 
 const program = new Command();
@@ -46,8 +60,18 @@ program
   .option('-o, --out <dir>', 'output directory for generated fixes', './geo-audit-output')
   .option('--html', 'generate a self-contained HTML report')
   .option('--json', 'dump raw results as JSON to stdout')
+  .option('--min-score <number>', 'exit with status 1 when the audit score is below this threshold')
   .action(async (url: string, opts: CliOptions) => {
     const productLimit = Math.max(1, Math.min(20, parseInt(opts.products, 10) || 5));
+
+    let minScore: number | undefined;
+    try {
+      minScore = parseMinScore(opts.minScore);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error(pc.red(msg));
+      process.exit(1);
+    }
 
     let storeUrl: string;
     try {
@@ -129,6 +153,13 @@ program
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error(pc.red(`\nWrite error: ${msg}`));
+      process.exit(1);
+    }
+
+    if (minScore !== undefined && scoreResult.value < minScore) {
+      console.error(
+        pc.red(`Score ${scoreResult.value} is below required minimum ${minScore}.`)
+      );
       process.exit(1);
     }
   });
