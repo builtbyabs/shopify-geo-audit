@@ -1,6 +1,7 @@
 import { Command } from 'commander';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import pc from 'picocolors';
 
 import { fetchStore, normalizeUrl } from './fetcher.js';
@@ -34,7 +35,7 @@ interface CliOptions {
   minScore?: string;
 }
 
-function parseMinScore(value: string | undefined): number | undefined {
+export function parseMinScore(value: string | undefined): number | undefined {
   if (value === undefined) {
     return undefined;
   }
@@ -45,6 +46,10 @@ function parseMinScore(value: string | undefined): number | undefined {
   }
 
   return minScore;
+}
+
+export function isBelowMinScore(scoreValue: number, minScore: number | undefined): boolean {
+  return minScore !== undefined && scoreValue < minScore;
 }
 
 const program = new Command();
@@ -156,7 +161,7 @@ program
       process.exit(1);
     }
 
-    if (minScore !== undefined && scoreResult.value < minScore) {
+    if (isBelowMinScore(scoreResult.value, minScore)) {
       console.error(
         pc.red(`Score ${scoreResult.value} is below required minimum ${minScore}.`)
       );
@@ -164,4 +169,6 @@ program
     }
   });
 
-program.parse();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  program.parse();
+}
