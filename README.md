@@ -93,12 +93,13 @@ shopify-geo-audit <url> [options]
   -o, --out <dir>      where to write the fixes          (default: ./geo-audit-output)
   --html               also write a self-contained report.html
   --json               print raw results as JSON (for CI); fixes still get written
+  --min-score <n>      exit 1 if the score is below n (0-100)
 ```
 
-`--json` keeps stdout clean so you can pipe it:
+`--json` keeps stdout clean so you can pipe it, and `--min-score` lets CI fail on weak audits:
 
 ```bash
-shopify-geo-audit https://store.com --json | jq '.score.value'
+shopify-geo-audit https://store.com --json --min-score 80 | jq '.score.value'
 ```
 
 ## How it works
