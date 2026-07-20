@@ -18,7 +18,7 @@ Want it on your PATH instead of `npx`? `npm i -g shopify-geo-audit`.
 
 ## Why I built this
 
-I do a lot of Shopify work, and "are we showing up in AI answers?" became a real client question fast. The existing tools mostly hand you a dashboard that says you're invisible and stop there. The useful part, the part that takes an afternoon by hand, is producing the actual structured data and config. So I wrote the thing that does that part.
+I do a lot of Shopify work, and "are we showing up in AI answers?" became a real client question fast. The field goes by a pile of names — GEO, AEO, AI SEO, LLM SEO, answer engine optimization — but the question is the same: when someone asks ChatGPT or Perplexity for product recommendations, is your store citable? The existing tools mostly hand you a dashboard that says you're invisible and stop there. The useful part, the part that takes an afternoon by hand, is producing the actual structured data and config. So I wrote the thing that does that part.
 
 It's deliberately small and offline. One command, runs locally, nothing leaves your machine except the requests to the store you're auditing.
 
@@ -39,6 +39,8 @@ Nine checks, weighted by how much they matter for getting cited:
 | `sitemap.xml` reachable | low |
 
 The result is an **SRO Score** (Search Readiness for AI): 80-100 strong, 50-79 needs work, below 50 at risk.
+
+The premise — that deliberate changes to your pages measurably move how often engines cite you — comes from the original GEO paper ([Aggarwal et al., KDD 2024](https://arxiv.org/abs/2311.09735)), which measured visibility gains of up to ~40% from exactly this kind of work.
 
 ## What it generates
 
@@ -125,9 +127,25 @@ npm test          # vitest, one spec per check
 npm run typecheck # strict, no any
 ```
 
+## FAQ
+
+**Is this just SEO with a new name?**
+Overlapping, not the same. A store can rank fine on Google and still hand ChatGPT nothing it can quote — no Product JSON-LD, thin descriptions, a robots.txt that blocks the crawlers. The checks here are specifically about what AI engines parse and cite.
+
+**Why Shopify only?**
+Because Shopify is predictable. Product discovery uses `/products.json` (with a sitemap fallback), and the generated fixes assume Shopify's theme conventions, so they actually fit instead of being generic advice. It will run against any URL, but on a non-Shopify site the product-level checks won't find much.
+
+**Does any of my data leave my machine?**
+No. The only network requests are to the store you're auditing. No telemetry, no account, nothing phoned home.
+
+**My score is low. Where do I start?**
+`priority-list.txt` in the output folder — it's every failing check ranked by weight, each with a one-line fix. The two highs (Product JSON-LD, robots.txt) are usually an hour of work combined.
+
 ## Contributing
 
 Adding a check is the easiest contribution: drop a file in `src/checks/`, add a fixture and a test, wire it into `src/index.ts`. See [CONTRIBUTING.md](CONTRIBUTING.md). Issues and PRs welcome; `good first issue` is tagged.
+
+And if the tool saved you an afternoon, a star is how other Shopify folks find it.
 
 ## License
 

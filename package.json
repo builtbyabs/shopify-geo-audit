@@ -1,7 +1,7 @@
 {
   "name": "shopify-geo-audit",
   "version": "0.1.0",
-  "description": "Zero-config CLI that audits any Shopify storefront for AI-search (GEO) readiness and generates the actual fixes.",
+  "description": "Audit any Shopify store for AI search (GEO/AEO) readiness — scores what ChatGPT, Perplexity, Gemini and Google AI Overviews can read, and generates the fixes. No signup, runs locally.",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -27,8 +27,15 @@
   "keywords": [
     "shopify",
     "geo",
+    "aeo",
     "generative-engine-optimization",
+    "answer-engine-optimization",
     "ai-search",
+    "ai-seo",
+    "llm-seo",
+    "ai-visibility",
+    "chatgpt",
+    "perplexity",
     "structured-data",
     "json-ld",
     "llms-txt",
