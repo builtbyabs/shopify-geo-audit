@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0
 
 - MCP server: `shopify-geo-audit-mcp` exposes the audit as an `audit_shopify_store`
   tool for Claude, Cursor and other MCP clients. Same pipeline, same fixes,

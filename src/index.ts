@@ -42,7 +42,7 @@ program
   .description(
     'Audit any Shopify storefront for AI-search (GEO) readiness and generate paste-ready fixes.'
   )
-  .version('0.1.0')
+  .version('0.2.0')
   .argument('<url>', 'Shopify storefront URL')
   .option('-n, --products <number>', 'number of product pages to audit', '5')
   .option('-o, --out <dir>', 'output directory for generated fixes', './geo-audit-output')

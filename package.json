@@ -1,6 +1,6 @@
 {
   "name": "shopify-geo-audit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Audit any Shopify store for AI search (GEO/AEO) readiness — scores what ChatGPT, Perplexity, Gemini and Google AI Overviews can read, and generates the fixes. No signup, runs locally.",
   "type": "module",
   "engines": {
