@@ -104,6 +104,23 @@ shopify-geo-audit <url> [options]
 shopify-geo-audit https://store.com --json --min-score 80 | jq '.score.value'
 ```
 
+## MCP server
+
+The audit also runs as an MCP tool, so Claude, Cursor or any MCP client can audit a store mid-conversation:
+
+```json
+{
+  "mcpServers": {
+    "shopify-geo-audit": {
+      "command": "npx",
+      "args": ["-y", "--package=shopify-geo-audit", "shopify-geo-audit-mcp"]
+    }
+  }
+}
+```
+
+One tool, `audit_shopify_store` — takes a URL, returns the full results and generated fixes as JSON. Same pipeline as the CLI, nothing else running.
+
 ## How it works
 
 It's a straight pipeline with the side effects pushed to the edges:
