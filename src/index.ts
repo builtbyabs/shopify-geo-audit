@@ -4,28 +4,11 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import pc from 'picocolors';
 
-import { fetchStore, normalizeUrl } from './fetcher.js';
-import { score } from './scorer.js';
+import { normalizeUrl } from './fetcher.js';
+import { auditStore } from './audit.js';
 import { printTerminalReport } from './reporters/terminal.js';
 import { generateHtmlReport } from './reporters/html.js';
 import { formatJson } from './reporters/json.js';
-
-import { checkProductJsonLd }    from './checks/product-jsonld.js';
-import { checkAiCrawlerAccess }  from './checks/ai-crawler-access.js';
-import { checkOrgWebsiteSchema } from './checks/org-website-schema.js';
-import { checkLlmsTxt }          from './checks/llms-txt.js';
-import { checkMetaBasics }       from './checks/meta-basics.js';
-import { checkContentDepth }     from './checks/content-depth.js';
-import { checkHeadings }         from './checks/headings.js';
-import { checkImageAlt }         from './checks/image-alt.js';
-import { checkSitemap }          from './checks/sitemap.js';
-
-import { generateProductJsonLdFix } from './fixers/product-jsonld.js';
-import { generateLlmsTxt }          from './fixers/llms-txt.js';
-import { generateRobotsFixes }      from './fixers/robots-fixes.js';
-import { generatePriorityList }     from './fixers/priority-list.js';
-
-import type { CheckResult, AuditResults } from './types.js';
 
 interface CliOptions {
   products: string;
@@ -52,7 +35,7 @@ export function isBelowMinScore(scoreValue: number, minScore: number | undefined
   return minScore !== undefined && scoreValue < minScore;
 }
 
-const program = new Command();
+export const program = new Command();
 
 program
   .name('shopify-geo-audit')
@@ -90,37 +73,16 @@ program
       console.log(pc.dim(`\nAuditing ${storeUrl} …`));
     }
 
-    let storeFetch, products;
+    let outcome;
     try {
-      ({ storeFetch, products } = await fetchStore(storeUrl, productLimit));
+      outcome = await auditStore(storeUrl, productLimit);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error(pc.red(`\nFetch error: ${msg}`));
       process.exit(1);
     }
 
-    // Run all checks
-    const checks: CheckResult[] = [
-      checkProductJsonLd(storeFetch),
-      checkAiCrawlerAccess(storeFetch),
-      checkOrgWebsiteSchema(storeFetch),
-      checkLlmsTxt(storeFetch),
-      checkMetaBasics(storeFetch),
-      checkContentDepth(storeFetch),
-      checkHeadings(storeFetch),
-      checkImageAlt(storeFetch),
-      checkSitemap(storeFetch),
-    ];
-
-    const scoreResult = score(checks);
-
-    const results: AuditResults = {
-      storeUrl: storeFetch.storeUrl,
-      storeName: storeFetch.storeName,
-      checks,
-      score: scoreResult,
-      generatedAt: new Date().toISOString(),
-    };
+    const { results, fixes } = outcome;
 
     // stdout: JSON for machines (keep it clean — no other stdout), or the
     // pretty terminal report for humans. Either way, the fixes still generate.
@@ -135,16 +97,11 @@ program
     try {
       await mkdir(opts.out, { recursive: true });
 
-      const productJsonLdFix = generateProductJsonLdFix(products, storeFetch);
-      const llmsTxt          = generateLlmsTxt(storeFetch, products);
-      const robotsFix        = generateRobotsFixes(storeFetch);
-      const priorityList     = generatePriorityList(checks);
-
       await Promise.all([
-        writeFile(join(opts.out, 'product-jsonld.html'), productJsonLdFix, 'utf8'),
-        writeFile(join(opts.out, 'llms.txt'),            llmsTxt,          'utf8'),
-        writeFile(join(opts.out, 'robots-fixes.txt'),    robotsFix,        'utf8'),
-        writeFile(join(opts.out, 'priority-list.txt'),   priorityList,     'utf8'),
+        writeFile(join(opts.out, 'product-jsonld.html'), fixes.productJsonLd, 'utf8'),
+        writeFile(join(opts.out, 'llms.txt'),            fixes.llmsTxt,       'utf8'),
+        writeFile(join(opts.out, 'robots-fixes.txt'),    fixes.robotsFixes,   'utf8'),
+        writeFile(join(opts.out, 'priority-list.txt'),   fixes.priorityList,  'utf8'),
       ]);
 
       if (opts.html) {
@@ -161,14 +118,17 @@ program
       process.exit(1);
     }
 
-    if (isBelowMinScore(scoreResult.value, minScore)) {
+    if (isBelowMinScore(results.score.value, minScore)) {
       console.error(
-        pc.red(`Score ${scoreResult.value} is below required minimum ${minScore}.`)
+        pc.red(`Score ${results.score.value} is below required minimum ${minScore}.`)
       );
       process.exit(1);
     }
   });
 
+// Only self-parse when this module *is* the entry script (node dist/index.js).
+// bin/cli.js imports `program` and parses explicitly — the previous guard never
+// matched through the bin shim, which left `npx shopify-geo-audit` a silent no-op.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   program.parse();
 }
