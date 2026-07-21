@@ -1,5 +1,6 @@
 # dependencies
 node_modules/
+mcp/package-lock.json
 
 # build output
 dist/

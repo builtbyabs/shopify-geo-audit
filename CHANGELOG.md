@@ -4,7 +4,9 @@
 
 - MCP server: `shopify-geo-audit-mcp` exposes the audit as an `audit_shopify_store`
   tool for Claude, Cursor and other MCP clients. Same pipeline, same fixes,
-  returned as JSON instead of written to disk.
+  returned as JSON instead of written to disk. Shipped both as a binary in this
+  package and as a standalone `shopify-geo-audit-mcp` package for `npx -y`
+  one-liners and the MCP registry.
 - `--min-score <n>` exits 1 when the score is below the threshold (#6, thanks
   @MFA-G).
 - Fixed: the entry guard added in #6 never matched when invoked through

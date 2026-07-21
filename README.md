@@ -113,13 +113,13 @@ The audit also runs as an MCP tool, so Claude, Cursor or any MCP client can audi
   "mcpServers": {
     "shopify-geo-audit": {
       "command": "npx",
-      "args": ["-y", "--package=shopify-geo-audit", "shopify-geo-audit-mcp"]
+      "args": ["-y", "shopify-geo-audit-mcp"]
     }
   }
 }
 ```
 
-One tool, `audit_shopify_store` — takes a URL, returns the full results and generated fixes as JSON. Same pipeline as the CLI, nothing else running.
+One tool, `audit_shopify_store` — takes a URL, returns the full results and generated fixes as JSON. Same pipeline as the CLI, nothing else running. The server also ships in the main package as the `shopify-geo-audit-mcp` binary if you'd rather not pull a second package.
 
 ## How it works
 

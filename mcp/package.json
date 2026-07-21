@@ -1,0 +1,42 @@
+{
+  "name": "shopify-geo-audit-mcp",
+  "version": "0.2.0",
+  "description": "MCP server for shopify-geo-audit — audit any Shopify store for AI search (GEO/AEO) readiness from Claude, Cursor, or any MCP client.",
+  "mcpName": "io.github.builtbyabs/shopify-geo-audit",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "shopify",
+    "geo",
+    "aeo",
+    "ai-search",
+    "ai-seo",
+    "chatgpt",
+    "perplexity",
+    "structured-data",
+    "llms-txt"
+  ],
+  "type": "module",
+  "bin": {
+    "shopify-geo-audit-mcp": "cli.js"
+  },
+  "files": [
+    "cli.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "shopify-geo-audit": "^0.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/builtbyabs/shopify-geo-audit.git",
+    "directory": "mcp"
+  },
+  "homepage": "https://github.com/builtbyabs/shopify-geo-audit#mcp-server",
+  "license": "MIT",
+  "author": "Abhishek Chauhan"
+}
